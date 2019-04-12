@@ -1,4 +1,4 @@
-FROM liangxin1300/habase:2
+FROM liangxin1300/habase:3
 
 WORKDIR /app
 

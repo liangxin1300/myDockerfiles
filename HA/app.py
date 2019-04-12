@@ -30,8 +30,19 @@ def get_stdout(cmd, input_s=None, stderr_on=True, shell=True):
     return proc.returncode, to_ascii(stdout_data)
 
 
-print(get_stdout("which ip")[1])
-print(get_stdout("ip addr show")[1])
+def get_interface():
+    import re
+    iface_res = get_stdout("ip addr show")[1]
+    for line in iface_res.split('\n'):
+        res = re.match(r'^[0-9]+:\s+(eth0.*):\s+<', line)
+        if res:
+            return res.group(1)
+    return None
+
 print(get_stdout("rpm -qa crmsh")[1])
 print(get_stdout("rpm -qa pacemaker")[1])
 print(get_stdout("rpm -qa corosync")[1])
+print(get_stdout("ip addr show")[1])
+print(get_interface())
+print(get_stdout("ps -ef|grep systemd"))
+#get_stdout("crm cluster init -i {} -y".format(get_interface()))
