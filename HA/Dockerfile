@@ -1,9 +1,8 @@
-FROM opensuse/tumbleweed
+FROM liangxin1300/habase:2
 
 WORKDIR /app
 
 COPY . /app
 
-RUN zypper -n install python3 pacemaker corosync crmsh
-
 CMD ["python3", "app.py"]
+#CMD ["crm", "cluster", "init", "-y"]
