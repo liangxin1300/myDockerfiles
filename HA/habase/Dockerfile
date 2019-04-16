@@ -13,7 +13,5 @@ rm -f /usr/lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /usr/lib/systemd/system/basic.target.wants/*;\
 rm -f /usr/lib/systemd/system/anaconda.target.wants/*;
 
-RUN zypper -n install python3 iproute2 which iputils
-
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/lib/systemd/systemd", "--system"]
