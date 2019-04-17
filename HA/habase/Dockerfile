@@ -1,6 +1,9 @@
 FROM opensuse/tumbleweed
 MAINTAINER Xin Liang <XLiang@suse.com>
 
+ARG ssh_prv_key
+ARG ssh_pub_key
+
 ENV container docker
 
 RUN zypper -n install systemd; zypper clean ; \
@@ -12,6 +15,12 @@ rm -f /usr/lib/systemd/system/sockets.target.wants/*udev*; \
 rm -f /usr/lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /usr/lib/systemd/system/basic.target.wants/*;\
 rm -f /usr/lib/systemd/system/anaconda.target.wants/*;
+
+RUN zypper -n install openssh
+RUN mkdir -p /root/.ssh && chmod 0700 /root/.ssh
+RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa
+RUN echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && chmod 600 /root/.ssh/id_rsa.pub
+RUN echo "$ssh_pub_key" > /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys
 
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/lib/systemd/systemd", "--system"]
