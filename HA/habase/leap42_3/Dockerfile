@@ -21,5 +21,9 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa
 RUN echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && chmod 600 /root/.ssh/id_rsa.pub
 RUN echo "$ssh_pub_key" > /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys
 
+RUN zypper -n install python python-xml curl vim python-lxml python-PyYAML python-nosexcover python-python-dateutil python-parallax autoconf automake make pkgconfig which tar iproute2 iputils bzip2 csync2 openssh
+RUN curl https://bootstrap.pypa.io/get-pip.py | python
+RUN pip install behave
+
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/lib/systemd/systemd", "--system"]
