@@ -8,10 +8,6 @@ setup() {
     return
   fi
 
-  #for i in $(seq $num_container)
-  #do
-  #  echo "10.10.10.$((i+1)) hanode$i"
-  #done
   docker pull ${image}
   docker network create --subnet 10.10.10.0/24 second_net
   
@@ -23,10 +19,13 @@ setup() {
     
     docker run -d --name=$_hostname --hostname $_hostname --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${image}
     docker network connect --ip=$_ip second_net $_hostname
+    for i in $(seq $num_container)
+    do
+      sub_hostname="hanode$i"
+      sub_ip="10.10.10.$((i+1))"
+      docker exec -t $_hostname /bin/sh -c "echo \"$sub_ip $sub_hostname\" >> /etc/hosts"
+    done
   done
-
-  #docker network connect --ip=10.10.10.2 second_net hanode1
-  #docker exec -t hanode1 /bin/sh -c "echo \"10.10.10.3 hanode2\" >> /etc/hosts"
 }
 
 setup "$1"
