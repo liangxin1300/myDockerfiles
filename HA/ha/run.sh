@@ -23,6 +23,9 @@ setup() {
     do
       sub_hostname="hanode$i"
       sub_ip="10.10.10.$((i+1))"
+      if [ $sub_hostname == $_hostname ];then
+        continue
+      fi
       docker exec -t $_hostname /bin/sh -c "echo \"$sub_ip $sub_hostname\" >> /etc/hosts"
     done
   done
