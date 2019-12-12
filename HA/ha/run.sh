@@ -29,7 +29,7 @@ setup() {
   do
     hostname_list+="hanode$i "
   done
-  cmd="ha-cluster-init -y --no-overwrite-sshkey --nodes \"$hostname_list\""
+  cmd="ha-cluster-init -y --no-overwrite-sshkey --nodes \"${hostname_list%% }\""
   docker exec -t hanode1 /bin/sh -c "$cmd"
 }
 
