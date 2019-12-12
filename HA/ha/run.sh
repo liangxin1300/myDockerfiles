@@ -2,7 +2,6 @@
 image='liangxin1300/ha'
 
 setup() {
-
   docker pull ${image}
   docker network create --subnet 10.10.10.0/24 second_net
   
@@ -24,15 +23,27 @@ setup() {
       docker exec -t $_hostname /bin/sh -c "echo \"$sub_ip $sub_hostname\" >> /etc/hosts"
     done
   done
+
+  hostname_list=""
+  for i in $(seq $num_container)
+  do
+    hostname_list+="hanode$i "
+  done
+  cmd="ha-cluster-init -y --no-overwrite-sshkey --nodes \"$hostname_list\""
+  docker exec -t hanode1 /bin/sh -c "$cmd"
 }
 
 clean() {
   for i in $(seq $num_container)
   do
     _hostname="hanode$i"
-    docker container stop $_hostname 2> /dev/null
-    docker container rm $_hostname 2> /dev/null
+    echo "Stop and clean $_hostname"
+    docker container stop $_hostname &> /dev/null
+    docker container rm $_hostname &> /dev/null
   done
+
+  docker network rm second_net &> /dev/null
+  echo "Done"
 }
 
 num_container=${2:-1}
@@ -41,8 +52,13 @@ if ! [[ $num_container =~ ^[1-9][0-9]*$ ]];then
   return
 fi
 
+tt() {
+  :
+}
+
 case "$1" in
   "setup") setup;;
   "clean") clean;;
+  "tt") tt;;
   *) echo "Usage: setup/clean number";;
 esac
