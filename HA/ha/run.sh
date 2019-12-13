@@ -4,7 +4,7 @@ image='liangxin1300/ha'
 setup_nodes() {
   docker pull ${image}
   docker network create --subnet 10.10.10.0/24 second_net
-  
+  echo "################## Setup $num_container nodes"
   for i in $(seq $num_container)
   do
     _hostname="hanode$i"
@@ -22,17 +22,23 @@ setup_nodes() {
       fi
       docker exec -t $_hostname /bin/sh -c "echo \"$sub_ip $sub_hostname\" >> /etc/hosts"
     done
+    
+    docker exec -t $_hostname /bin/sh -c "crm corosync set quorum.expected_votes $num_container"
+    if [ $num_container -eq 2 ];then
+      docker exec -t $_hostname /bin/sh -c "crm corosync set quorum.two_node 1"
+    else
+      docker exec -t $_hostname /bin/sh -c "crm corosync set quorum.two_node 0"
+    fi
   done
 }
 
 setup() {
-  hostname_list=""
+  echo "################## Start cluster service on $num_container nodes"
   for i in $(seq $num_container)
   do
-    hostname_list+="hanode$i "
+    _hostname="hanode$i"
+    docker exec -t $_hostname /bin/sh -c "crm cluster start"
   done
-  cmd="ha-cluster-init -y --no-overwrite-sshkey --nodes \"${hostname_list%% }\""
-  docker exec -t hanode1 /bin/sh -c "$cmd"
 }
 
 clean() {
