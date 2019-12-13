@@ -1,7 +1,7 @@
 #!/bin/bash
 image='liangxin1300/ha'
 
-setup() {
+setup_nodes() {
   docker pull ${image}
   docker network create --subnet 10.10.10.0/24 second_net
   
@@ -23,7 +23,9 @@ setup() {
       docker exec -t $_hostname /bin/sh -c "echo \"$sub_ip $sub_hostname\" >> /etc/hosts"
     done
   done
+}
 
+setup() {
   hostname_list=""
   for i in $(seq $num_container)
   do
@@ -57,8 +59,12 @@ tt() {
 }
 
 case "$1" in
-  "setup") setup;;
+  "setup") 
+    setup_nodes
+    setup
+    ;;
   "clean") clean;;
   "tt") tt;;
+  "setup_nodes") setup_nodes;;
   *) echo "Usage: setup/clean number";;
 esac
