@@ -43,8 +43,8 @@ clean() {
   for i in $(seq $num_container)
   do
     _hostname="hanode$i"
-    echo "Stop and clean $_hostname"
-    docker container stop $_hostname &> /dev/null
+    echo "Kill and rm $_hostname"
+    docker container kill $_hostname &> /dev/null
     docker container rm $_hostname &> /dev/null
   done
 
