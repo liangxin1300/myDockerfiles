@@ -26,6 +26,7 @@ setup_nodes() {
     done
 
     docker exec -t $_hostname /bin/sh -c "sed -i '/nodelist/r /opt/node_list.txt' /etc/corosync/corosync.conf"
+    docker exec -t $_hostname /bin/sh -c "systemctl start corosync.service"
   done
 }
 
@@ -65,7 +66,7 @@ tt() {
 case "$1" in
   "setup") 
     setup_nodes
-    setup
+    #setup
     ;;
   "clean") clean;;
   "tt") tt;;
