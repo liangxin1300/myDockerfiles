@@ -41,8 +41,10 @@ setup_nodes() {
     do
       sub_hostname="hanode$i"
       _ip_prefix=`echo ${array_parent[0]}|awk '{print $2}'|awk -F"." '{b=$1FS$2FS$3FS;print b}'`
-      sub_ip="$_ip_prefix$((i+1))"
-      sed_cmd+="  node {\\\n    ring0_addr: $sub_ip\\\n    nodeid: $i\\\n    name: $sub_hostname\\\n  }\\\n"
+      sub_ip1="$_ip_prefix$((i+1))"
+      _ip_prefix=`echo ${array_parent[1]}|awk '{print $2}'|awk -F"." '{b=$1FS$2FS$3FS;print b}'`
+      sub_ip2="$_ip_prefix$((i+1))"
+      sed_cmd+="  node {\\\n    ring0_addr: $sub_ip1\\\n    ring1_addr: $sub_ip2\\\n    nodeid: $i\\\n    name: $sub_hostname\\\n  }\\\n"
       if [ $sub_hostname == $_hostname ];then
         continue
       fi
