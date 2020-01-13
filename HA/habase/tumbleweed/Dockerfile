@@ -25,7 +25,7 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa
 RUN echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && chmod 600 /root/.ssh/id_rsa.pub
 RUN echo "$ssh_pub_key" > /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys
 
-RUN zypper -n install autoconf automake make pkgconfig which tar iproute2 iputils vim bzip2 python3 python3-lxml python3-python-dateutil python3-parallax libglue-devel python3-setuptools python3-tox asciidoc libxslt-tools mailx procps python3-nose python3-PyYAML python3-curses python3-behave csync2 openssh
+RUN zypper -n install autoconf automake make pkgconfig which tar iproute2 iputils vim bzip2 file python3 python3-lxml python3-python-dateutil python3-parallax libglue-devel python3-setuptools python3-tox asciidoc libxslt-tools mailx procps python3-nose python3-PyYAML python3-curses python3-behave python3-pip csync2 openssh
 
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/lib/systemd/systemd", "--system"]
