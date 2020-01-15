@@ -22,7 +22,7 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa
 RUN echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && chmod 600 /root/.ssh/id_rsa.pub
 RUN echo "$ssh_pub_key" > /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys
 
-RUN zypper -n install make autoconf automake pkg-config vim which libxslt-tools mailx procps iproute2 iputils bzip2 openssh tar
+RUN zypper -n install make autoconf automake pkg-config vim which libxslt-tools mailx procps iproute2 iputils bzip2 openssh tar hostname
 RUN zypper -n install python python-setuptools python-lxml python-parallax python-tox python-pip python-PyYAML python-curses python-dateutil python-nose
 RUN zypper -n install csync2 libglue-devel
 RUN pip install --upgrade pip
