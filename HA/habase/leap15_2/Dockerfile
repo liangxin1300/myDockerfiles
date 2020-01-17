@@ -4,7 +4,7 @@ MAINTAINER Xin Liang <XLiang@suse.com>
 ARG ssh_prv_key
 ARG ssh_pub_key
 # Above is for passwordless ssh
-# docker build -t hatleap --build-arg ssh_prv_key="$(cat /root/.ssh/id_rsa)" --build-arg ssh_pub_key="$(cat /root/.ssh/id_rsa.pub)" .
+# docker build -t haleap --build-arg ssh_prv_key="$(cat /root/.ssh/id_rsa)" --build-arg ssh_pub_key="$(cat /root/.ssh/id_rsa.pub)" .
 
 ENV container docker
 
