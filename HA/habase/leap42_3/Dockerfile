@@ -23,10 +23,10 @@ RUN echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && chmod 600 /root/.ssh/id_rsa.p
 RUN echo "$ssh_pub_key" > /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys
 
 RUN zypper -n install make autoconf automake pkg-config vim which libxslt-tools mailx procps iproute2 iputils bzip2 openssh tar hostname
-RUN zypper -n install python python-setuptools python-lxml python-parallax python-tox python-pip python-PyYAML python-curses python-dateutil python-nose
+RUN zypper -n install python python-setuptools python-lxml python-parallax python-pip python-PyYAML python-curses python-dateutil python-nose
 RUN zypper -n install csync2 libglue-devel
 RUN pip install --upgrade pip
-RUN pip install behave mock future
+RUN pip install behave mock future tox
 
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/lib/systemd/systemd", "--system"]
