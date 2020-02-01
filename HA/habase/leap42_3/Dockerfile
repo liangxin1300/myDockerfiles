@@ -26,7 +26,7 @@ RUN zypper -n install make autoconf automake pkg-config vim which libxslt-tools 
 RUN zypper -n install python python-setuptools python-lxml python-parallax python-tox python-pip python-PyYAML python-curses python-dateutil python-nose
 RUN zypper -n install csync2 libglue-devel
 RUN pip install --upgrade pip
-RUN pip install behave mock
+RUN pip install behave mock future
 
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/lib/systemd/systemd", "--system"]
