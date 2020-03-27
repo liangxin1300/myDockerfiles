@@ -24,7 +24,7 @@ RUN echo "$ssh_pub_key" > /root/.ssh/authorized_keys && chmod 600 /root/.ssh/aut
 
 RUN zypper -n install make autoconf automake pkg-config vim which libxslt-tools mailx procps iproute2 iputils bzip2 openssh tar hostname
 RUN zypper -n install python python-lxml python-parallax python-pip python-PyYAML python-curses python-dateutil python-nose
-RUN zypper -n install csync2 libglue-devel corosync pacemaker
+RUN zypper -n install csync2 libglue-devel corosync pacemaker booth
 RUN pip install --upgrade pip
 RUN pip install behave mock future tox setuptools
 
