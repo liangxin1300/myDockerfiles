@@ -7,6 +7,7 @@ ARG ssh_pub_key
 
 ENV container docker
 
+RUN zypper ref
 RUN zypper -n install systemd; zypper clean ; \
 (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
 rm -f /usr/lib/systemd/system/multi-user.target.wants/*;\
@@ -23,7 +24,7 @@ RUN echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && chmod 600 /root/.ssh/id_rsa.p
 RUN echo "$ssh_pub_key" > /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys
 
 RUN zypper -n install make autoconf automake pkg-config vim which libxslt-tools mailx procps iproute2 iputils bzip2 openssh tar hostname
-RUN zypper -n install python python-lxml python-parallax python-pip python-PyYAML python-curses python-dateutil python-nose
+RUN zypper -n install python python-lxml python-parallax python-pip python-PyYAML python-curses python-dateutil python-nose python-ipaddress
 RUN zypper -n install csync2 libglue-devel corosync pacemaker booth
 RUN pip install --upgrade pip
 RUN pip install behave mock future tox setuptools
