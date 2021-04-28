@@ -23,9 +23,11 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa
 RUN echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && chmod 600 /root/.ssh/id_rsa.pub
 RUN echo "$ssh_pub_key" > /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys
 
+RUN zypper ref
 RUN zypper -n install make autoconf automake pkg-config vim which libxslt-tools mailx procps iproute2 iputils bzip2 openssh tar hostname
 RUN zypper -n install python python-lxml python-parallax python-pip python-PyYAML python-curses python-dateutil python-nose python-ipaddress
-RUN zypper -n install csync2 libglue-devel corosync pacemaker booth
+RUN zypper -n install csync2 libglue-devel corosync pacemaker booth hawk
+RUN rpm -e crmsh crmsh-scripts --nodeps
 RUN pip install --upgrade pip
 RUN pip install behave mock future tox setuptools
 
